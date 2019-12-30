@@ -1,0 +1,56 @@
+{% load static %}
+<html>
+    <head>
+        <title>Login</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap4/bootstrap.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main_styles.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/login.css'%}">
+    </head>
+    <body>
+    <div class="container-fluid">
+        <div class="row no-gutter">
+            <!-- The image half -->
+            <div class="col-md-6 d-none d-md-flex bg-image"></div>
+
+
+            <!-- The content half -->
+            <div class="col-md-6 bg-light">
+                <div class="col-md-12" style="height: 20%">
+                    <div class="header_social">
+                        <ul>
+                            <li><div class="button"><a href="/voice/register">Register</a></div></li>
+                            <li><div class="button"><a href="/voice/index">GammaLab</a></div></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-12" style="height: 70%">
+                    <div class="login d-flex py-1">
+
+                        <!-- Demo content-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-10 col-xl-7 mx-auto">
+                                    <h3 class="display-4">Login</h3>
+                                    <p class="text-muted mb-4">Login to try the state-of-art technique.</p>
+                                    <form action="/voice/login/" method="post" enctype="multipart/form-data">
+                                        <div class="form-group mb-3">
+                                            <input id="inputUsername" type="text" name="username" placeholder="username" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <input id="inputPassword" type="password" name="password" placeholder="password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm">Sign in</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div><!-- End -->
+                    </div>
+                </div>
+            </div><!-- End -->
+        </div>
+    </div>
+    </body>
+</html>

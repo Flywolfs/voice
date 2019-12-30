@@ -1,0 +1,430 @@
+{% load static %}
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>VoiceLab - Dashboard</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/font_style.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin-2.min.css'%}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <img src="{% static 'img/gamma.png' %}">
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Functions
+        </div>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser" aria-expanded="true" aria-controls="collapseUser">
+                <i class="fas fa-fw fa-database"></i>
+                <span>Initial User Data </span>
+            </a>
+            <div id="collapseUser" class="collapse" aria-labelledby="headingUser" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Custom Utilities:</h6>
+                    <form id="jump" style="display: none;"><input name="username" value={{ request.session.msg }}></form>
+                    <a class="collapse-item" onclick="to_voice_page()">Voice</a>
+                    <a class="collapse-item" onclick="to_app_page()">Scene</a>
+                </div>
+            </div>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseResultPanel" aria-expanded="true" aria-controls="collapseResultPanel">
+                <i class="fas fa-fw fa-suitcase"></i>
+                <span>Result Panel</span>
+            </a>
+            <div id="collapseResultPanel" class="collapse" aria-labelledby="headingUser" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Custom Utilities:</h6>
+                    <a class="collapse-item" href="result.html">Voice Split Result</a>
+                </div>
+            </div>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                <!-- Sidebar Toggle (Topbar) -->
+                <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Topbar Search -->
+                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Topbar Navbar -->
+                <ul class="navbar-nav ml-auto">
+
+                    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                    <li class="nav-item dropdown no-arrow d-sm-none">
+                        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <!-- Dropdown - Messages -->
+                        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                            <form class="form-inline mr-auto w-100 navbar-search">
+                                <div class="input-group">
+                                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="button">
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+
+                    <div class="topbar-divider d-none d-sm-block"></div>
+
+                    <!-- Nav Item - User Information -->
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ request.session.msg }}</span>
+                            <img class="img-profile rounded-circle" src="{% static 'img/user.png' %}">
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Profile
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Settings
+                            </a>
+                            <a class="dropdown-item" href="#">
+                                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Activity Log
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/voice/login" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+
+            </nav>
+            <!-- End of Topbar -->
+
+            <div class="container-fluid">
+            <!-- Page Heading -->
+                <h1 class="h3 mb-4 text-gray-800">Voice Registration</h1>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Host Voice Registration</h6>
+                            </div>
+                            <div class="card-body">
+                              <p>Please register your voice in this card.</p>
+                                <button id="self_record" class="btn btn-primary btn-icon-split" onclick="startRecording(this);">
+                                    <span class="icon text-white-50">
+                                      <i class="fas fa-microphone"></i>
+                                    </span>
+                                    <span class="text">Record Voice</span>
+                                </button>
+                                <button id="self_check" class="btn btn-success btn-circle" onclick="stopRecording(this,'self');" disabled="true">
+                                    <i class="fas fa-stop"></i>
+                                </button>
+                                <button id="self_delete" class="btn btn-danger btn-circle" onclick="deleteRecording(this,'self');" disabled="true">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                                <a href="#" class="btn btn-warning btn-circle">
+                                    <i class="fas fa-upload"></i>
+                                </a>
+                                <div class="mt-4 mb-2">
+                                    <ul id="recordingslist" class="mt-4 mb-2"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+
+                      <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                          <h6 class="m-0 font-weight-bold text-primary">Guest Voice Registration</h6>
+                        </div>
+                        <div class="card-body">
+                          <p>Please register other guests' voice in this card, press the red "+" below.</p>
+                            <button id="add" class="btn btn-primary btn-circle" onclick="addUser(this);">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <button id="del" class="btn btn-danger btn-circle" onclick="minusUser(this);">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <div id="userList"></div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2019</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-primary" href="/voice/login">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+
+<!-- Page level plugins -->
+<script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+
+<!-- Page level custom scripts -->
+<script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+<script src="{% static 'js/demo/chart-pie-demo.js' %}"></script>
+<script src="{% static 'js/recorder.js' %}"></script>
+
+<script>
+    function startUserMedia(stream) {
+        var input = audio_context.createMediaStreamSource(stream);
+
+        // 如果你想让音频直接反馈
+        //input.connect(audio_context.destination);
+        //__log('Input connected to audio context destination.');
+        var config = {
+            sampleRate: 16000,
+            sampleRate: 16000,
+            bitRate: 16,
+            mimeType: 'audio/mp3'
+        };
+
+        recorder = new Recorder(input,config);
+    }
+
+    function startRecording(button) {
+        recorder && recorder.record();
+        button.disabled = "true";
+        var elem = document.getElementById('self_check');
+        elem.disabled = false;
+    }
+
+    function stopRecording(button,user) {
+        console.log(user);
+        recorder && recorder.stop();
+        button.disabled = "true";
+        var elem = document.getElementById('self_record');
+        var elem_d = document.getElementById('self_delete');
+        elem_d.disabled = false;
+        elem.disabled = false ;
+        createDownloadLink("self");
+        recorder && recorder.clear();
+    }
+    
+    function deleteRecording(button,user) {
+        var node = document.getElementById(user);
+        recordingslist.removeChild(node);
+    }
+
+    var user = 0;
+
+    function addUser() {
+        var html= '<button id="self_record" class="btn btn-primary btn-icon-split" onclick="startRecording(this);">\n' +
+'                                    <span class="icon text-white-50">\n' +
+'                                      <i class="fas fa-microphone"></i>\n' +
+'                                    </span>\n' +
+'                                    <span class="text">Record Voice</span>\n' +
+'                                   </button>\n' +
+'                                <button id="self_check" class="btn btn-success btn-circle" onclick="stopRecording(this,\'self\');" disabled="true">\n' +
+'                                    <i class="fas fa-stop"></i>\n' +
+'                                </button>\n' +
+'                                <button id="self_delete" class="btn btn-danger btn-circle" onclick="deleteRecording(this,\'self\');" disabled="true">\n' +
+'                                    <i class="fas fa-trash"></i>\n' +
+'                                </button>\n' +
+'                                <a href="#" class="btn btn-warning btn-circle">\n' +
+'                                    <i class="fas fa-upload"></i>\n' +
+'                                </a>\n' +
+'                                <input type="search" class="form-control form-control-sm" placeholder="">\n' +
+'                                <div class="mt-4 mb-2">\n' +
+'                                    <ul id="recordingslist" class="mt-4 mb-2"></ul>\n' +
+'                                </div>';
+        var userCardOuter = document.createElement('div');
+        var userCardInner = document.createElement('div');
+        userCardInner.className = "card-body";
+        userCardInner.innerHTML = html;
+        userCardOuter.className = "mt-4 mb-2";
+        userCardOuter.id = "user"+user;
+        userCardOuter.appendChild(userCardInner);
+        userList.appendChild(userCardOuter);
+        user += 1;
+    }
+
+    function minusUser() {
+        var node = document.getElementById("user"+(user-1));
+        user -= 1;
+        userList.removeChild(node);
+    }
+
+    function createDownloadLink(user) {
+        recorder && recorder.exportAudio(function(blob) {
+            var url = URL.createObjectURL(blob);
+            var formData = new FormData();
+            formData.append("data", blob);
+            // var name = $("input").val();
+            // formData.append("file", $("#upload")[0].files[0]);
+            // formData.append("name", name);
+            var li = document.createElement('li');
+            var au = document.createElement('audio');
+            li.id = user;
+            // var hf = document.createElement('a');
+            au.controls = true;
+            au.src = url;
+            // hf.href = url;
+            // hf.download = new Date().toISOString() + '.mp3';
+            // hf.innerHTML = hf.download;
+            li.appendChild(au);
+            // li.appendChild(hf);
+            recordingslist.appendChild(li);
+        });
+    }
+
+    function errorHandler(params) {
+    }
+
+    function to_voice_page() {
+          $("#jump").attr({'action':"/voice/dashboard/voice_page","method":"POST","enctype":"multipart/form-data"}).submit();
+      }
+
+    function to_app_page() {
+          $("#jump").attr({'action':"/voice/dashboard/scene_page","method":"POST","enctype":"multipart/form-data"}).submit();
+    }
+
+    window.onload = function init() {
+        try {
+            // webkit shim
+            window.AudioContext = window.AudioContext || window.webkitAudioContext;
+            navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ;
+            window.URL = window.URL || window.webkitURL;
+            audio_context = new AudioContext;
+        } catch (e) {
+            alert('当前浏览器不支持音频功能');
+        }
+        // navigator.getUserMedia = navigator.getUserMedia ||
+        //   navigator.webkitGetUserMedia ||
+        //   navigator.mozGetUserMedia;
+
+        // navigator.mediaDevices.getUserMedia({ audio: true }, startUserMedia, function(e) {
+        //   __log('No live audio input: ' + e);
+        // });
+
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(startUserMedia)
+            .catch(errorHandler)
+    };
+</script>
+</body>
+
+</html>
